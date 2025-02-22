@@ -35,13 +35,15 @@ num_execs = st.number_input("🔄 Número de execuções (deixe 0 para calcular 
 if st.button("📌 Calcular"):
     executions_per_million = calculator.calc_executions_per_million(tokens_per_exec)
     
+    st.subheader("📌 Resultados")
+    st.markdown(f"<div style='padding:10px; border-radius:10px; background-color:#1E1E1E; color:white;'>"
+                f"<b>🛠 Função:</b> {function_name if function_name else 'Não especificado'}<br>"
+                f"<b>🔢 Execuções possíveis por 1M tokens:</b> {executions_per_million:.2f}"
+                f"</div>", unsafe_allow_html=True)
+    
     if num_execs > 0:
         cost_for_execs = calculator.calc_cost_for_executions(model, num_execs, tokens_per_exec)
-        st.subheader("📌 Resultados")
-        st.write(f"**🛠 Função:** {function_name if function_name else 'Não especificado'}")
-        st.write(f"**🔄 Número de execuções:** {num_execs}")
-        st.write(f"**💰 Custo:** **${cost_for_execs['cost_usd']:.2f} USD** / **R${cost_for_execs['cost_brl']:.2f} BRL**")
-    else:
-        st.subheader("📌 Resultados para 1M tokens")
-        st.write(f"**🛠 Função:** {function_name if function_name else 'Não especificado'}")
-        st.write(f"**🔢 Execuções possíveis por 1M tokens:** **{executions_per_million:.2f}**")
+        st.markdown(f"<div style='padding:10px; border-radius:10px; background-color:#1E1E1E; color:white;'>"
+                    f"<b>🔄 Número de execuções:</b> {num_execs}<br>"
+                    f"<b>💰 Custo:</b> ${cost_for_execs['cost_usd']:.2f} USD / R${cost_for_execs['cost_brl']:.2f} BRL"
+                    f"</div>", unsafe_allow_html=True)
